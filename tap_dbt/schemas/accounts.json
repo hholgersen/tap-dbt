@@ -64,7 +64,7 @@
       "type": "boolean"
     },
     "unlocked_at": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "created_at": {
       "type": "string"
