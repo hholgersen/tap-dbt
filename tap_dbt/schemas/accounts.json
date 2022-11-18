@@ -55,7 +55,7 @@
       "type": ["string", "null"]
     },
     "billing_email_address": {
-      "type": "string"
+      "type": ["string", "null"]
     },
     "locked": {
       "type": "boolean"
