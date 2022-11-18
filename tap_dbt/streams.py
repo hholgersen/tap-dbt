@@ -40,6 +40,9 @@ class DBTStream(RESTStream):
 
 
 class AccountBasedStream(DBTStream):
+
+    response_jsonpath = "$.data[*]"
+    
     @property
     def partitions(self) -> List[dict]:
         """Return a list of partition key dicts (if applicable), otherwise None."""
@@ -78,6 +81,7 @@ class JobsStream(AccountBasedStream):
 class ProjectsStream(AccountBasedStream):
     name = "projects"
     path = "/accounts/{account_id}/projects"
+    response_jsonpath = "$.data[*]"
     schema_filepath = SCHEMAS_DIR / "projects.json"
 
 
@@ -85,6 +89,7 @@ class ProjectsStream(AccountBasedStream):
 class RunsStream(AccountBasedStream):
     name = "runs"
     path = "/accounts/{account_id}/runs"
+    response_jsonpath = "$.data[*]"
     schema_filepath = SCHEMAS_DIR / "runs.json"
     page_size = 100
 
