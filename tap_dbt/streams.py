@@ -67,6 +67,9 @@ class JobsStream(AccountBasedStream):
     path = "/accounts/{account_id}/jobs"
     schema_filepath = SCHEMAS_DIR / "jobs.json"
 
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        yield response.json()["data"]
+
     def get_url_params(
         self,
         partition: Optional[dict],
@@ -79,6 +82,10 @@ class ProjectsStream(AccountBasedStream):
     name = "projects"
     path = "/accounts/{account_id}/projects"
     schema_filepath = SCHEMAS_DIR / "projects.json"
+
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        yield response.json()["data"]
+
 
 
 class RunsStream(AccountBasedStream):
@@ -97,6 +104,9 @@ class RunsStream(AccountBasedStream):
             "limit": self.page_size,
             "offset": next_page_token,
         }
+
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        yield response.json()["data"]
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
