@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft-04/schema",
-  "$id": "/projects.json",
   "type": "object",
   "properties": {
     "id": {

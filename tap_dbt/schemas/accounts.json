@@ -1,6 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft-04/schema",
-  "$id": "/accounts.json",
   "type": "object",
   "properties": {
     "docs_job_id": {
@@ -87,6 +85,5 @@
     "enterprise_login_url": {
       "type": "string"
     }
-  },
-  "additionalProperties": false
+  }
 }
