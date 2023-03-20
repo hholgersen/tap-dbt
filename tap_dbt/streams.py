@@ -43,17 +43,19 @@ class DBTStream(RESTStream):
 
 class AccountBasedStream(DBTStream):
 
-    @property
-    def partitions(self) -> List[dict]:
-        """Return a list of partition key dicts (if applicable), otherwise None."""
+    def ttt(self):
+        pass
+    # @property
+    # def partitions(self) -> List[dict]:
+    #     """Return a list of partition key dicts (if applicable), otherwise None."""
 
-        if "{account_id}" in self.path:
-            return [{"account_id": id} for id in cast(list, self.config["account_ids"])]
-        raise ValueError(
-            "Could not detect partition type for dbt stream "
-            f"'{self.name}' ({self.path}). "
-            "Expected a URL path containing '{account_id}'. "
-        )
+    #     if "{account_id}" in self.path:
+    #         return [{"account_id": id} for id in cast(list, self.config["account_ids"])]
+    #     raise ValueError(
+    #         "Could not detect partition type for dbt stream "
+    #         f"'{self.name}' ({self.path}). "
+    #         "Expected a URL path containing '{account_id}'. "
+    #     )
 
 
 class AccountsStream(AccountBasedStream):
@@ -89,7 +91,31 @@ class ProjectsStream(AccountBasedStream):
 class RunsStream(AccountBasedStream):
     name = "runs"
     path = "/accounts/{account_id}/runs"
-    schema_filepath = SCHEMAS_DIR / "runs.json"
+    # schema_filepath = SCHEMAS_DIR / "runs.json"
+
+    schema = th.PropertiesList(
+        th.Property("name", th.StringType),
+        th.Property(
+            "id",
+            th.IntegerType,
+            description="The user's system ID",
+        ),
+        th.Property(
+            "git_branch",
+            th.StringType,
+            description="The user's email address",
+        ),
+        th.Property("git_sha", th.StringType),
+        th.Property("dbt_version", th.StringType),
+        th.Property(
+            "updated_at",
+            th.StringType,
+            description="State name in ISO 3166-2 format",
+        ),
+        th.Property("zip", th.StringType),
+    ).to_dict()
+
+
     response_jsonpath = "$.data[*]"
     page_size = 100
 
