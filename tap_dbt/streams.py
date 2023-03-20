@@ -90,7 +90,7 @@ class ProjectsStream(AccountBasedStream):
 
 class RunsStream(AccountBasedStream):
     name = "runs"
-    path = "/accounts/{account_id}/runs"
+    path = "/accounts/85/runs"
     # schema_filepath = SCHEMAS_DIR / "runs.json"
 
     schema = th.PropertiesList(
