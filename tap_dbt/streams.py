@@ -2,7 +2,7 @@
 
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, cast
-
+import singer_sdk.typing as th
 import requests
 from singer_sdk.authenticators import APIAuthenticatorBase, SimpleAuthenticator
 from singer_sdk.streams import RESTStream
