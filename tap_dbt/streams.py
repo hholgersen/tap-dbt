@@ -16,9 +16,7 @@ class DBTStream(RESTStream):
     # url_base = "https://cloud.getdbt.com/api/v2"
     primary_keys = ["id"]
     replication_key = None
-    #response_jsonpath = "$.data[*]"
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        yield response.json()["data"]
+    response_jsonpath = "$.data[*]"
 
 
     @property
@@ -61,8 +59,8 @@ class AccountsStream(AccountBasedStream):
     path = "/accounts/{account_id}"
     schema_filepath = SCHEMAS_DIR / "accounts.json"
 
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        yield response.json()["data"]
+    # def parse_response(self, response: requests.Response) -> Iterable[dict]:
+    #     yield response.json()["data"]
 
 
 class JobsStream(AccountBasedStream):
@@ -97,6 +95,7 @@ class RunsStream(AccountBasedStream):
         partition: Optional[dict],
         next_page_token: int,
     ) -> Dict[str, Any]:
+
         return {
             "order_by": "updated_at",
             "limit": self.page_size,

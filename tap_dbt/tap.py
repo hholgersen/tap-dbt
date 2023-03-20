@@ -10,9 +10,9 @@ from tap_dbt.streams import AccountsStream, JobsStream, ProjectsStream, RunsStre
 
 TAP_NAME = "tap-dbt"
 STREAM_TYPES = [
-    AccountsStream,
-    JobsStream,
-    ProjectsStream,
+    # AccountsStream,
+    # JobsStream,
+    # ProjectsStream,
     RunsStream,
 ]
 
