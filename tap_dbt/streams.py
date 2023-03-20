@@ -6,7 +6,8 @@ from typing import Any, Dict, Iterable, List, Optional, cast
 import requests
 from singer_sdk.authenticators import APIAuthenticatorBase, SimpleAuthenticator
 from singer_sdk.streams import RESTStream
-
+from singer_sdk.helpers.jsonpath import extract_jsonpath
+import logging
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
@@ -114,3 +115,20 @@ class RunsStream(AccountBasedStream):
             return previous_token + self.page_size
 
         return None
+
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        """Parse the response and return an iterator of result records.
+        Args:
+            response: A raw `requests.Response`_ object.
+        Yields:
+            One item for every item found in the response.
+        .. _requests.Response:
+            https://requests.readthedocs.io/en/latest/api/#requests.Response
+        """
+        logger = logging.getLogger()
+        logger.info("***** UNPARSED RESPONSE *****")
+        logger.info(response)
+        logger.info("***** PARSED RESPONSE *****")
+        logger.info(extract_jsonpath(self.records_jsonpath, input=response.json()))
+
+        yield from extract_jsonpath(self.records_jsonpath, input=response.json())
