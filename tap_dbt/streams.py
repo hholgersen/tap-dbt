@@ -53,6 +53,8 @@ class AccountBasedStream(DBTStream):
             "Expected a URL path containing '{account_id}'. "
         )
 
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        yield response.json()["data"]
 
 class AccountsStream(AccountBasedStream):
     name = "accounts"
