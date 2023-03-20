@@ -16,7 +16,9 @@ class DBTStream(RESTStream):
     # url_base = "https://cloud.getdbt.com/api/v2"
     primary_keys = ["id"]
     replication_key = None
-    response_jsonpath = "$.data[*]"
+    #response_jsonpath = "$.data[*]"
+    def parse_response(self, response: requests.Response) -> Iterable[dict]:
+        yield response.json()["data"]
 
 
     @property
@@ -53,8 +55,6 @@ class AccountBasedStream(DBTStream):
             "Expected a URL path containing '{account_id}'. "
         )
 
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        yield response.json()["data"]
 
 class AccountsStream(AccountBasedStream):
     name = "accounts"
