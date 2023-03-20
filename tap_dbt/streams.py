@@ -39,6 +39,7 @@ class DBTStream(RESTStream):
         )
 
 
+
 class AccountBasedStream(DBTStream):
 
     @property
@@ -88,6 +89,7 @@ class RunsStream(AccountBasedStream):
     name = "runs"
     path = "/accounts/{account_id}/runs"
     schema_filepath = SCHEMAS_DIR / "runs.json"
+    response_jsonpath = "$.data[*]"
     page_size = 100
 
     def get_url_params(
