@@ -127,8 +127,8 @@ class RunsStream(AccountBasedStream):
         """
         logger = logging.getLogger()
         logger.info("***** UNPARSED RESPONSE *****")
-        logger.info(response)
+        logger.info(response.json())
         logger.info("***** PARSED RESPONSE *****")
-        logger.info(extract_jsonpath(self.records_jsonpath, input=response.json()))
+        logger.info(list(extract_jsonpath(self.records_jsonpath, input=response.json())))
 
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
